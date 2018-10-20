@@ -19,7 +19,7 @@ const GameContainer = styled.div`
 
 export default class Game extends React.Component {
   state = {
-    numCols: 5
+    numCols: 3
   }
 
   renderTiles() {
@@ -34,7 +34,7 @@ export default class Game extends React.Component {
 
     return (
       <GameContainer numCols={this.state.numCols}>
-        {this.renderTiles()}
+      {this.renderTiles()}
       </GameContainer>
     )
   }
