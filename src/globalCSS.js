@@ -3,7 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 export const GlobalStyles = createGlobalStyle`
 
   :root {
-    --cols: [left-gutter-start] 1fr [left-gutter-end main-start] repeat(16, minmax(1.5rem, 1fr)) [main-end right-gutter-start] 1fr [right-gutter-end];
+    --cols: [left-gutter-start] minmax(2rem, 1fr) [left-gutter-end main-start] repeat(16, minmax(1.5rem, 1fr)) [main-end right-gutter-start] minmax(2rem, 1fr) [right-gutter-end];
   }
 
   *,
@@ -17,23 +17,15 @@ export const GlobalStyles = createGlobalStyle`
   html {
     box-sizing: border-box;
     font-size: 62.5%;
-    height: 100%;
   }
 
   body {
+    --body-y-padding: 3.5rem;
+    padding: var(--body-y-padding) 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    height: 100%;
-  }
-
-  #root {
-    height: 100%;
   }
 
   p {
     font-size: 1.8rem;
-  }
-
-  main {
-    grid-column: main-start / main-end;
   }
 `

@@ -5,16 +5,17 @@ import Header from './Header';
 import Footer from './Footer';
 
 const Container = styled.div`
+  --header-height: 3rem;
+  --footer-height: 3rem;
   display: grid;
-  height: 100%;
   grid-template-columns: var(--cols);
-  grid-template-rows: 7rem 1fr 5rem;
+  grid-template-rows: var(--header-height) 1fr var(--footer-height);
 `
 
 export default (props) => (
   <Container>
     <Header />
-    <main>{props.children}</main>
+    {props.children}
     <Footer />
   </Container>
 );
