@@ -4,8 +4,9 @@ import GameStatusContext from '../Game/GameStatusContext';
 
 const Header = styled.header`
   grid-column: left-gutter-start / right-gutter-end;
-  /* display: flex;
-  justify-content: space-between; */
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
   background: black;
   color: white;
 `
@@ -13,11 +14,11 @@ const Header = styled.header`
 export default () => (
   <Header>
     <h1>CSS Grid Game</h1>
-    <p>Settings</p>
     <p>
       <GameStatusContext.Consumer>
         {context => `Tries Remaining: ${context.triesRemaining}`}
       </GameStatusContext.Consumer>
     </p>
+    <p>Settings</p>
   </Header>
 )

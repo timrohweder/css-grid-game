@@ -131,8 +131,6 @@ export default class Game extends React.Component {
   render() {
     console.log("rendered");
     return (
-      <React.Fragment>
-       <p style={{position: "absolute", top: "40px", left: "45%"}}>{this.context.triesRemaining ? `Remaining Tries: ${this.context.triesRemaining}` : 'Game Over :('}</p>
         <GameWrapper numCols={this.state.numCols}>
           {
             this.state.tiles &&
@@ -150,7 +148,6 @@ export default class Game extends React.Component {
                 )
           }
         </GameWrapper>
-      </React.Fragment>
     )
   }
 }
