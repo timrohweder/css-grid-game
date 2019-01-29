@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Tile from './Tile';
+import GameStatusContext from './GameStatusContext';
 
 const GameWrapper = styled.div`
   --grid-gap: 1.5rem;
@@ -20,19 +21,20 @@ const GameWrapper = styled.div`
 `
 
 export default class Game extends React.Component {
+  static contextType = GameStatusContext;
+
   state = {
-    numCols: 2,
+    numCols: 6,
     tiles: null,
     selectedA: undefined,
-    selectedB: undefined,
-    remainingTries: 3
+    selectedB: undefined
   }
 
   handleClick = (e) => {
     const tile = e.target.closest('.tile__container');
 
     // disregard click if game is over
-    if(!this.state.remainingTries) return;
+    if(!this.context.triesRemaining) return;
 
     // disregard click if it's on an already matched item
     if (tile.classList.contains('matched')) return;
@@ -81,19 +83,16 @@ export default class Game extends React.Component {
         selectedB: undefined
       })
     } else { // guess was incorrect
-      this.setState(prevState => ({
-        remainingTries: --prevState.remainingTries
-      }), () => {
-        // let player see tile contents before flipping them back over
-        // unless the game is over
-        console.log(this.state.remainingTries);
-        setTimeout(() => {
-          this.setState({
-            selectedA: undefined,
-            selectedB: undefined
-          })
-        }, this.state.remainingTries ? 1500 : 0)
-      });
+      this.context.decrementTries();
+      // let player see tile contents before flipping them back over
+      // unless the game is over
+      console.log(this.context.triesRemaining);
+      setTimeout(() => {
+        this.setState({
+          selectedA: undefined,
+          selectedB: undefined
+        })
+      }, this.context.triesRemaining ? 1500 : 0)
     }
   }
 
@@ -133,7 +132,7 @@ export default class Game extends React.Component {
     console.log("rendered");
     return (
       <React.Fragment>
-       <p style={{position: "absolute", top: "40px", left: "45%"}}>{this.state.remainingTries ? `Remaining Tries: ${this.state.remainingTries}` : 'Game Over :('}</p>
+       <p style={{position: "absolute", top: "40px", left: "45%"}}>{this.context.triesRemaining ? `Remaining Tries: ${this.context.triesRemaining}` : 'Game Over :('}</p>
         <GameWrapper numCols={this.state.numCols}>
           {
             this.state.tiles &&
@@ -146,7 +145,7 @@ export default class Game extends React.Component {
                     contents={tile}
                     memberOfMatch={memberOfMatch}
                     clickHandler={this.handleClick}
-                    gameOver={!this.state.remainingTries}
+                    gameOver={!this.context.triesRemaining}
                   />
                 )
           }

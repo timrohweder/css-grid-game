@@ -20,7 +20,7 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   body {
-    --body-y-padding: 3.5rem;
+    --body-y-padding: 0rem;
     padding: var(--body-y-padding) 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   }

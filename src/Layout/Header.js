@@ -1,15 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
+import GameStatusContext from '../Game/GameStatusContext';
 
 const Header = styled.header`
-  grid-column: main-start / main-end;
-  display: flex;
-  justify-content: space-between;
+  grid-column: left-gutter-start / right-gutter-end;
+  /* display: flex;
+  justify-content: space-between; */
+  background: black;
+  color: white;
 `
 
-export default ({tries}) => (
+export default () => (
   <Header>
     <h1>CSS Grid Game</h1>
     <p>Settings</p>
+    <p>
+      <GameStatusContext.Consumer>
+        {context => `Tries Remaining: ${context.triesRemaining}`}
+      </GameStatusContext.Consumer>
+    </p>
   </Header>
 )
