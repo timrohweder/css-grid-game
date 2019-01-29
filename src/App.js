@@ -6,9 +6,11 @@ import GameStatusContext from './Game/GameStatusContext';
 
 class App extends Component {
 
-  decrementTries = () => this.setState(state => ({
-    triesRemaining: --state.triesRemaining
-  }));
+  decrementTries = () => {
+    this.setState(state => ({
+      triesRemaining: --state.triesRemaining
+    }))
+  };
 
   state = {
     triesRemaining: 5,
