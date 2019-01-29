@@ -27,7 +27,11 @@ const Tile = styled.div`
     width: 100%;
     backface-visibility: hidden;
   }
-  &:hover {
+  ${TileContainer}.active & {
+    transform: rotateY(180deg);
+  }
+  ${TileContainer}.matched & {
+    border: 2px solid #000;
     transform: rotateY(180deg);
   }
  `
@@ -42,11 +46,16 @@ const TileContentsBack = styled.div`
   background: #eee;
 `
 
-export default ({active}) => (
-  <TileContainer>
-    <Tile className={active ? 'active' : null}>
-      <TileContentsFront></TileContentsFront>
-      <TileContentsBack>Back</TileContentsBack>
+export default ({clickHandler, contents, active, dataId, memberOfMatch, gameOver}) => (
+  <TileContainer
+    data-contents={contents}
+    data-id={dataId}
+    className={`tile__container ${active ? 'active' : ''} ${memberOfMatch ? 'matched' : ''}`}
+    onClick={clickHandler}
+  >
+    <Tile>
+      <TileContentsFront>{gameOver && contents}</TileContentsFront>
+      <TileContentsBack className="tile__back">{contents}</TileContentsBack>
     </Tile>
   </TileContainer>
 );

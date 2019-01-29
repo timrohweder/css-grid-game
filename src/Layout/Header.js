@@ -7,7 +7,7 @@ const Header = styled.header`
   justify-content: space-between;
 `
 
-export default () => (
+export default ({tries}) => (
   <Header>
     <h1>CSS Grid Game</h1>
     <p>Settings</p>
