@@ -6,14 +6,14 @@ import GameStatusContext from './Game/GameStatusContext';
 
 class App extends Component {
 
-  decrementTries = () => {
+  decrementTries = (callback) => {
     this.setState(state => ({
       triesRemaining: --state.triesRemaining
-    }))
+    }), callback ? callback : () => {})
   };
 
   state = {
-    triesRemaining: 5,
+    triesRemaining: 2,
     decrementTries: this.decrementTries
   };
 

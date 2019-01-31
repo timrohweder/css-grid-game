@@ -24,7 +24,7 @@ export default class Game extends React.Component {
   static contextType = GameStatusContext;
 
   state = {
-    numCols: 6,
+    numCols: 4,
     tiles: null,
     selectedA: undefined,
     selectedB: undefined
@@ -83,17 +83,20 @@ export default class Game extends React.Component {
         selectedB: undefined
       })
     } else { // guess was incorrect
-      this.context.decrementTries();
-      // let player see tile contents before flipping them back over
-      // unless the game is over
-      console.log(this.context.triesRemaining);
-      setTimeout(() => {
+      this.context.decrementTries(this.delayTileFlipBack.bind(this));
+    };
+  }
+
+  // if the game isn't over, delay the tile flipping back so the player can see
+  // the tile's contents
+  delayTileFlipBack() {
+    setTimeout(
+      () => {
         this.setState({
           selectedA: undefined,
           selectedB: undefined
-        })
-      }, this.context.triesRemaining ? 1500 : 0)
-    }
+        }
+      )}, this.context.triesRemaining ? 1500 : 0);
   }
 
   createTiles(numCols) {
