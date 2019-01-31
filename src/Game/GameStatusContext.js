@@ -1,7 +1,7 @@
 import React from 'react';
 
 const GameStatusContext = React.createContext({
-  triesRemaining: 5,
+  triesRemaining: 3,
   decrementTries: () => {}
 });
 

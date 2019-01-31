@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import Layout from './Layout/Layout';
 import { GlobalStyles } from './globalCSS';
 import Game from './Game/Game';
 import GameStatusContext from './Game/GameStatusContext';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
+import Settings from './Game/Settings';
 
 class App extends Component {
 
@@ -19,12 +20,13 @@ class App extends Component {
 
   render() {
     return (
-      <GameStatusContext.Provider value={this.state}>
-        <Layout>
-          <Game />
-        </Layout>
-        <GlobalStyles />
-      </GameStatusContext.Provider>
+      <Router>
+        <GameStatusContext.Provider value={this.state}>
+          <Route path="/" exact component={Game} />
+          <Route path="/settings" component={Settings} />
+          <GlobalStyles />
+        </GameStatusContext.Provider>
+      </Router>
     );
   }
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Tile from './Tile';
 import GameStatusContext from './GameStatusContext';
+import Layout from '../Layout/Layout';
 
 const GameWrapper = styled.div`
   --grid-gap: 1.5rem;
@@ -134,6 +135,7 @@ export default class Game extends React.Component {
   render() {
     console.log("rendered");
     return (
+      <Layout>
         <GameWrapper numCols={this.state.numCols}>
           {
             this.state.tiles &&
@@ -151,6 +153,7 @@ export default class Game extends React.Component {
                 )
           }
         </GameWrapper>
+      </Layout>
     )
   }
 }
