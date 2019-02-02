@@ -67,8 +67,6 @@ export default class Game extends React.Component {
     const tileBContent = this.state.selectedB.getElementsByClassName('tile__back')[0].textContent;
 
     if(tileAContent === tileBContent) {
-      console.log("you have a match")
-
       // set matching tiles' property memberOfMatch to true in state
       let tiles = this.context.tiles.map(tile => {
         if(tile.tile.toString() === tileAContent) {
@@ -76,7 +74,7 @@ export default class Game extends React.Component {
         }
         return tile;
       });
-      this.setState({ tiles });
+      this.setState({ tiles }, this.context.checkIfGameWon());
 
       // reset selectedA and selectedB
       this.setState({

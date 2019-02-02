@@ -51,9 +51,18 @@ class App extends Component {
   }
 
   resetGame = () => {
+    console.log("resetting...")
     this.setState({
       tiles: [],
-      triesRemaining: null
+      triesRemaining: null,
+      gameWon: false
+    }, this.createTiles)
+  }
+
+  checkIfGameWon = () => {
+    const isGameWon = !this.state.tiles.some(tile => !tile.memberOfMatch);
+    this.setState({
+      gameWon: isGameWon
     })
   }
 
@@ -62,11 +71,13 @@ class App extends Component {
     triesRemaining: null,
     setNumTries: this.setNumTries,
     decrementTries: this.decrementTries,
-    numCols: 4,
+    numCols: 2,
     setNumCols: this.setNumCols,
     tiles: [],
     createTiles: this.createTiles,
-    resetGame: this.resetGame
+    resetGame: this.resetGame,
+    gameWon: false,
+    checkIfGameWon: this.checkIfGameWon
   };
 
   render() {

@@ -16,12 +16,36 @@ const SettingsLink = styled(Link)`
   font-size: 18px;
 `
 
+const PlayAgainLink = styled(Link)`
+      margin-left: 15px;
+      padding-bottom: 3px;
+      color: lightblue;
+      border-bottom: 2px solid lightblue;
+`
+
+const PlayAgain = ({text, clickHandler}) => (
+  <React.Fragment>
+    {text}
+    <PlayAgainLink onClick={clickHandler} to="/"> Play Again?</PlayAgainLink>
+  </React.Fragment>
+)
+
 export default () => (
   <Header>
     <h1><Link to="/">CSS Grid Game</Link></h1>
     <p>
       <SettingsContext.Consumer>
-        {context => `Tries Remaining: ${context.triesRemaining === null ? context.triesToStart : context.triesRemaining}`}
+        {
+          context => {
+            if (context.gameWon) {
+              return <PlayAgain clickHandler={context.resetGame} text="You Win!" />
+            } else if (context.triesRemaining === 0) {
+              return <PlayAgain clickHandler={context.resetGame} text="You Lose :(" />
+            } else {
+              return `Tries Remaining: ${context.triesRemaining === null ? context.triesToStart : context.triesRemaining}`
+            }
+          }
+        }
       </SettingsContext.Consumer>
     </p>
     <SettingsLink to="/settings">Settings</SettingsLink>

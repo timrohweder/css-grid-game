@@ -1,14 +1,17 @@
 import React from 'react';
 
 const SettingsContext = React.createContext({
-  triesRemaining: 3,
+  triesToStart: 3,
+  triesRemaining: null,
   setNumTries: () => {},
   decrementTries: () => {},
   numCols: 4,
   setNumCols: () => {},
   tiles: [],
   createTiles: () => {},
-  resetGame: () => {}
+  resetGame: () => {},
+  gameWon: false,
+  checkIfGameWon: () => {}
 });
 
 export default SettingsContext;
