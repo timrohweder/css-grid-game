@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import Tile from './Tile';
-import GameStatusContext from './GameStatusContext';
+import SettingsContext from './SettingsContext';
 import Layout from '../Layout/Layout';
 
 const GameWrapper = styled.div`
   --grid-gap: 1.5rem;
   --game-y-margin: 5rem;
-  --max-col-width: calc((100vh - var(--game-y-margin) * 2 - var(--header-height) - var(--footer-height) - var(--body-y-padding) * 2 - (${props => props.numCols - 1}) * var(--grid-gap)) / ${props => props.numCols});
+  --max-col-width: calc((100vh - var(--game-y-margin) * 2 - var(--header-height) - var(--body-y-padding) * 2 - (${props => props.numCols - 1}) * var(--grid-gap)) / ${props => props.numCols});
 
   grid-column: left-gutter-end / right-gutter-start;
 
@@ -22,10 +22,10 @@ const GameWrapper = styled.div`
 `
 
 export default class Game extends React.Component {
-  static contextType = GameStatusContext;
+  static contextType = SettingsContext;
 
   state = {
-    numCols: 4,
+    numCols: this.context.numCols,
     tiles: null,
     selectedA: undefined,
     selectedB: undefined
@@ -35,7 +35,7 @@ export default class Game extends React.Component {
     const tile = e.target.closest('.tile__container');
 
     // disregard click if game is over
-    if(!this.context.triesRemaining) return;
+    if(this.context.triesRemaining === 0) return;
 
     // disregard click if it's on an already matched item
     if (tile.classList.contains('matched')) return;
@@ -70,7 +70,7 @@ export default class Game extends React.Component {
       console.log("you have a match")
 
       // set matching tiles' property memberOfMatch to true in state
-      let tiles = this.state.tiles.map(tile => {
+      let tiles = this.context.tiles.map(tile => {
         if(tile.tile.toString() === tileAContent) {
           tile.memberOfMatch = true;
         }
@@ -100,36 +100,36 @@ export default class Game extends React.Component {
       )}, this.context.triesRemaining ? 1500 : 0);
   }
 
-  createTiles(numCols) {
-    let tiles = [];
-    let tilesFodder = [];
-    let i, randomIndex;
+  // createTiles(numCols) {
+  //   let tiles = [];
+  //   let tilesFodder = [];
+  //   let i, randomIndex;
 
-    while (tilesFodder.length < Math.pow(numCols, 2) / 2) {
-      console.log("making fodder");
-      i = Math.floor(Math.random() * 100 + 1);
-      if (!tilesFodder.includes(i)) tilesFodder.push(i);
-    }
+  //   while (tilesFodder.length < Math.pow(numCols, 2) / 2) {
+  //     console.log("making fodder");
+  //     i = Math.floor(Math.random() * (Math.pow(numCols, 2) / 2) + 1);
+  //     if (!tilesFodder.includes(i)) tilesFodder.push(i);
+  //   }
 
-    [...tilesFodder,...tilesFodder].forEach(tile => {
-      while(true) {
-        randomIndex = Math.floor(Math.random() * Math.pow(numCols, 2));
-        if(tiles[randomIndex] === undefined || tiles[randomIndex] === null) {
-          tiles[randomIndex] = {
-            tile,
-            id: tile * Math.random() * Math.random(),
-            memberOfMatch: false
-          };
-          break;
-        }
-      }
-    });
+  //   [...tilesFodder,...tilesFodder].forEach(tile => {
+  //     while(true) {
+  //       randomIndex = Math.floor(Math.random() * Math.pow(numCols, 2));
+  //       if(tiles[randomIndex] === undefined || tiles[randomIndex] === null) {
+  //         tiles[randomIndex] = {
+  //           tile,
+  //           id: tile * Math.random() * Math.random(),
+  //           memberOfMatch: false
+  //         };
+  //         break;
+  //       }
+  //     }
+  //   });
 
-    this.setState({ tiles });
-  }
+  //   this.setState({ tiles });
+  // }
 
   componentDidMount() {
-    this.createTiles(this.state.numCols);
+      this.context.createTiles();
   }
 
   render() {
@@ -138,8 +138,8 @@ export default class Game extends React.Component {
       <Layout>
         <GameWrapper numCols={this.state.numCols}>
           {
-            this.state.tiles &&
-              this.state.tiles
+            this.context.tiles &&
+              this.context.tiles
                 .map(({tile, id, memberOfMatch}) =>
                   <Tile
                     active={(this.state.selectedA && +this.state.selectedA.dataset.id === id) || (this.state.selectedB && +this.state.selectedB.dataset.id === id)}
@@ -148,7 +148,7 @@ export default class Game extends React.Component {
                     contents={tile}
                     memberOfMatch={memberOfMatch}
                     clickHandler={this.handleClick}
-                    gameOver={!this.context.triesRemaining}
+                    gameOver={this.context.triesRemaining === 0}
                   />
                 )
           }

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import GameStatusContext from '../Game/GameStatusContext';
+import SettingsContext from '../Game/SettingsContext';
+import { Link } from 'react-router-dom';
 
 const Header = styled.header`
   grid-column: left-gutter-start / right-gutter-end;
@@ -11,14 +12,18 @@ const Header = styled.header`
   color: white;
 `
 
+const SettingsLink = styled(Link)`
+  font-size: 18px;
+`
+
 export default () => (
   <Header>
-    <h1>CSS Grid Game</h1>
+    <h1><Link to="/">CSS Grid Game</Link></h1>
     <p>
-      <GameStatusContext.Consumer>
-        {context => `Tries Remaining: ${context.triesRemaining}`}
-      </GameStatusContext.Consumer>
+      <SettingsContext.Consumer>
+        {context => `Tries Remaining: ${context.triesRemaining === null ? context.triesToStart : context.triesRemaining}`}
+      </SettingsContext.Consumer>
     </p>
-    <p>Settings</p>
+    <SettingsLink to="/settings">Settings</SettingsLink>
   </Header>
 )

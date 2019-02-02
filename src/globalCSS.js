@@ -28,4 +28,9 @@ export const GlobalStyles = createGlobalStyle`
   p {
     font-size: 1.8rem;
   }
+
+  a {
+    text-decoration: none;
+    color: #fff;
+  }
 `
