@@ -10,9 +10,14 @@ const Container = styled.div`
     grid-template-rows: var(--header-height) min-content 1fr;
 `;
 
+const Main = styled.main`
+    grid-column: 1 / -1;
+    overflow: auto;
+`;
+
 export default props => (
     <Container>
         <Header />
-        {props.children}
+        <Main>{props.children}</Main>
     </Container>
 );
