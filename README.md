@@ -42,3 +42,6 @@ This is a memory-style tiles game that uses React and CSS Grid.
 -   Add optional sound effects
 -   Add ability to have images or sounds be on the tiles instead of numbers
 -   Spruce up appearance
+
+# License
+[MIT License](https://choosealicense.com/licenses/mit/)
