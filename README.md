@@ -14,7 +14,7 @@ This is a memory-style tiles game that uses React and CSS Grid.
     -   styled-components
 -   **CSS**
     -   CSS Grid
-    -   Flexbox (a tiny bit in the header)
+    -   Flexbox
 
 # Install
 
